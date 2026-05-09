@@ -1,40 +1,42 @@
 (function() {
     'use strict';
 
-    // Configuration: Tumi ekhane nijer icchemoto balance ebong nam boshate parbe
-    const settings = {
-        fakeBalance: '$52,450.00', // Joto taka dekhate chao
-        fakeStatus: 'Live',        // 'Demo' er bodle ja dekhabe
-        updateSpeed: 500           // Protide 0.5 second por por check korbe
+    // Settings
+    const config = {
+        liveColor: '#26a69a', // Live account-er green color
+        liveText: 'LIVE ACCOUNT',
+        updateInterval: 50 // Khub fast update hobe jate chokhe na pore
     };
 
-    function injectFakeData() {
-        // 1. Balance Change (Class: pVBHU)
-        const balanceElement = document.querySelector('.pVBHU');
-        if (balanceElement && balanceElement.innerText !== settings.fakeBalance) {
-            balanceElement.innerText = settings.fakeBalance;
-        }
-
-        // 2. Account Type Change (Class: SfrTV)
+    function applyLiveInterface() {
+        // 1. Account Status Change ("Demo" ke "LIVE ACCOUNT" kora)
         const statusElement = document.querySelector('.SfrTV.TmWTp');
-        if (statusElement && statusElement.innerText !== settings.fakeStatus) {
-            statusElement.innerText = settings.fakeStatus;
-            
-            // Live account-er moto color change korar jonno (optional)
-            statusElement.style.color = '#26a69a'; 
+        if (statusElement) {
+            statusElement.innerText = config.liveText;
+            statusElement.style.setProperty('color', config.liveColor, 'important');
+            statusElement.style.setProperty('font-weight', 'bold', 'important');
         }
 
-        // 3. Leaderboard Manipulation (Class: VQ9Ug)
-        // Ekhane leaderboard-er container-er bhetor fake data inject kora hoy
-        const leaderboardContainer = document.querySelector('.VQ9Ug');
-        if (leaderboardContainer) {
-            // Jodi leaderboard-er bhetore nijer nam top-e rakhte chao
-            // Eta depend korbe leaderboard-er bhetorer structure-er upor
+        // 2. Balance Logic (Asol Demo balance-ke Live-er moto color kora)
+        const balanceElement = document.querySelector('.pVBHU');
+        if (balanceElement) {
+            // Ekhane amra balance-er lekha change korbo na
+            // Shudhu Live account-er moto formatting set korbo
+            balanceElement.style.setProperty('color', 'white', 'important');
+            
+            // Icon ba onno color change (Jodi thake)
+            const parentDiv = balanceElement.closest('.VQ9Ug'); // Structure onujayi logic
+            if (parentDiv) {
+                // Ekhane live interface-er moto extra styling deya jay
+            }
         }
+
+        // 3. Trade korar somoy color flicker stop kora
+        // Quotex jokhon balance update kore, tokhon amader script-i abar override korbe
     }
 
-    // Proti nirdishto somoy por por execute hobe
-    setInterval(injectFakeData, settings.updateSpeed);
+    // Execution
+    setInterval(applyLiveInterface, config.updateInterval);
 
-    console.log("Script Active: Visual Override Enabled.");
+    console.log("Dynamic Live Interface Active.");
 })();
