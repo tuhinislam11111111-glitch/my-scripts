@@ -1,42 +1,43 @@
 (function() {
     'use strict';
 
-    // Settings
     const config = {
-        liveColor: '#26a69a', // Live account-er green color
-        liveText: 'LIVE ACCOUNT',
-        updateInterval: 50 // Khub fast update hobe jate chokhe na pore
+        liveColor: '#26a69a', // Quotex Live Green
+        balanceColor: '#ffffff',
+        // Plane Icon SVG
+        planeIcon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 5px; vertical-align: middle;">
+                        <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="#26a69a"/>
+                    </svg>`
     };
 
-    function applyLiveInterface() {
-        // 1. Account Status Change ("Demo" ke "LIVE ACCOUNT" kora)
-        const statusElement = document.querySelector('.SfrTV.TmWTp');
-        if (statusElement) {
-            statusElement.innerText = config.liveText;
-            statusElement.style.setProperty('color', config.liveColor, 'important');
-            statusElement.style.setProperty('font-weight', 'bold', 'important');
+    function applyFullLiveInterface() {
+        // 1. Account Status and Icon Change
+        const statusContainer = document.querySelector('.SfrTV.TmWTp');
+        
+        if (statusContainer) {
+            // "LIVE ACCOUNT" lekha ebong icon set kora
+            // innerHTML bebohar kora hoyeche jate SVG icon-ti bose
+            statusContainer.innerHTML = config.planeIcon + '<span>LIVE ACCOUNT</span>';
+            
+            // Styling
+            statusContainer.style.setProperty('color', config.liveColor, 'important');
+            statusContainer.style.setProperty('display', 'flex', 'important');
+            statusContainer.style.setProperty('align-items', 'center', 'important');
+            statusContainer.style.setProperty('font-weight', '700', 'important');
+            statusContainer.style.setProperty('font-size', '11px', 'important');
+            statusContainer.style.setProperty('text-transform', 'uppercase', 'important');
         }
 
-        // 2. Balance Logic (Asol Demo balance-ke Live-er moto color kora)
+        // 2. Balance Color Fix
         const balanceElement = document.querySelector('.pVBHU');
         if (balanceElement) {
-            // Ekhane amra balance-er lekha change korbo na
-            // Shudhu Live account-er moto formatting set korbo
-            balanceElement.style.setProperty('color', 'white', 'important');
-            
-            // Icon ba onno color change (Jodi thake)
-            const parentDiv = balanceElement.closest('.VQ9Ug'); // Structure onujayi logic
-            if (parentDiv) {
-                // Ekhane live interface-er moto extra styling deya jay
-            }
+            balanceElement.style.setProperty('color', config.balanceColor, 'important');
+            balanceElement.style.setProperty('font-weight', '600', 'important');
         }
-
-        // 3. Trade korar somoy color flicker stop kora
-        // Quotex jokhon balance update kore, tokhon amader script-i abar override korbe
     }
 
-    // Execution
-    setInterval(applyLiveInterface, config.updateInterval);
+    // Fast interval jate demo icon firey na ashe
+    setInterval(applyFullLiveInterface, 50);
 
-    console.log("Dynamic Live Interface Active.");
+    console.log("Full Live Interface with Icon Injection Active.");
 })();
