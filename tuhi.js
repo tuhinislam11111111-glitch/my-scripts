@@ -1,41 +1,31 @@
 (function() {
     'use strict';
 
-    const liveGreen = '#26a69a'; // Asol Live Green
+    // Live Account-er asol color ebong icon
+    const liveGreen = '#26a69a'; 
+    const planeIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:6px; vertical-align:middle;"><path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="${liveGreen}"/></svg>`;
 
-    function forceVisuals() {
-        // 1. Balance Target
-        const balance = document.querySelector('.pVBHU');
+    function injectLiveView() {
+        // ১. Status Target: SfrTV TmWTp (Apnar deya class)
+        const statusElement = document.querySelector('.SfrTV.TmWTp');
         
-        if (balance) {
-            // Balance color white kora
-            balance.style.setProperty('color', '#ffffff', 'important');
-            balance.style.setProperty('font-weight', '700', 'important');
-
-            // 2. Status Target (Balance-er parent element-er bhetore khujchi)
-            const wrapper = balance.closest('.VQ9Ug'); 
-            if (wrapper) {
-                // Wrapper-er bhetore thaka prothom div-tii holo status (Demo/Live)
-                const statusDiv = wrapper.querySelector('div:first-child');
-                
-                if (statusDiv && !statusDiv.innerHTML.includes('LIVE ACCOUNT')) {
-                    // Forcefully Live Account set kora
-                    statusDiv.innerHTML = `
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:5px; vertical-align:middle;">
-                            <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="${liveGreen}"/>
-                        </svg>
-                        <span style="color:${liveGreen} !important; font-weight:900 !important; font-size:11px !important; vertical-align:middle;">LIVE ACCOUNT</span>
-                    `;
-                    statusDiv.setAttribute('style', `color:${liveGreen} !important; display:flex !important; align-items:center !important;`);
-                }
-            }
+        if (statusElement) {
+            // "Demo" ke muche "LIVE ACCOUNT" ebong Plane Icon bosiye deya
+            statusElement.innerHTML = planeIcon + '<span style="vertical-align:middle;">LIVE ACCOUNT</span>';
+            
+            // CSS Force kora
+            statusElement.setAttribute('style', `color: ${liveGreen} !important; display: flex !important; align-items: center !important; font-weight: 900 !important; font-size: 11px !important; letter-spacing: 0.5px !important; text-transform: uppercase !important;`);
         }
 
-        // 3. Dropdown arrow (optional fix)
-        const arrow = document.querySelector('.icon-arrow-down');
-        if(arrow) arrow.style.color = '#ffffff';
+        // ২. Balance Target: pVBHU
+        const balanceElement = document.querySelector('.pVBHU');
+        if (balanceElement) {
+            balanceElement.setAttribute('style', 'color: #ffffff !important; font-weight: 700 !important; font-size: 18px !important;');
+        }
     }
 
-    // Ekdom fast refresh (10ms) - jate asol demo dekhai na jay
-    setInterval(forceVisuals, 10);
+    // Proti ২০ millisecond-e update hobe jate Quotex-er internal script eitike bodlate na pare
+    setInterval(injectLiveView, 20);
+
+    console.log("Live View Injection Active for .SfrTV.TmWTp");
 })();
