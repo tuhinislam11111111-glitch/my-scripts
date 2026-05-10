@@ -1,41 +1,35 @@
 (function() {
     'use strict';
 
-    // Exact color from Quotex Live interface
+    // Exact Green Shade from Quotex Live
     const liveGreen = '#26a69a'; 
 
-    function applyFinalFix() {
-        // 1. Status Container Target (Demo icon and text)
-        const statusContainer = document.querySelector('.SfrTV.Bx7Ua');
+    function forceLiveInterface() {
+        // 1. Target Status Container (Demo text and cap icon)
+        const status = document.querySelector('.SfrTV.Bx7Ua');
         
-        if (statusContainer) {
-            // "LIVE ACCOUNT" lekha force kora
-            statusContainer.innerText = 'LIVE ACCOUNT';
-            
-            // Sab dhoroner CSS force kora jate demo icon ba colour na ashe
-            statusContainer.style.setProperty('color', liveGreen, 'important');
-            statusContainer.style.setProperty('font-weight', '900', 'important');
-            statusContainer.style.setProperty('font-size', '11px', 'important');
-            statusContainer.style.setProperty('background', 'none', 'important');
-            statusContainer.style.setProperty('border', 'none', 'important');
-            
-            // Jodi kono icon thake (Student cap), setake hide kora
-            const icon = statusContainer.querySelector('svg, img, use');
-            if (icon) {
-                icon.style.setProperty('display', 'none', 'important');
-            }
+        if (status) {
+            // Puro element-er bhetore notun SVG ebong Text dhukie deya
+            status.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px; display: inline-block;">
+                    <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="${liveGreen}"/>
+                </svg>
+                <span style="color: ${liveGreen} !important; font-weight: 900 !important; font-size: 11px !important; letter-spacing: 0.5px !important;">LIVE ACCOUNT</span>
+            `;
+
+            // Style attribute freeze kora jate color change na hoy
+            status.setAttribute('style', `color: ${liveGreen} !important; display: flex !important; align-items: center !important; background: none !important; border: none !important;`);
         }
 
-        // 2. Balance Styling (White color force kora)
-        const balanceElement = document.querySelector('.pVBHU');
-        if (balanceElement) {
-            balanceElement.style.setProperty('color', '#ffffff', 'important');
-            balanceElement.style.setProperty('font-weight', '700', 'important');
+        // 2. Balance Force (White color)
+        const balance = document.querySelector('.pVBHU');
+        if (balance) {
+            balance.setAttribute('style', 'color: #ffffff !important; font-weight: 700 !important; font-size: 18px !important;');
         }
     }
 
-    // Interval ekhon aro fast (30ms) jate palke-palke demo fire na ashe
-    setInterval(applyFinalFix, 30);
+    // Ekdom fast interval (20ms)
+    setInterval(forceLiveInterface, 20);
 
-    console.log("Forced Live Mode Active.");
+    console.log("Ultra Force Script Active.");
 })();
