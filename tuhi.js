@@ -1,42 +1,41 @@
 (function() {
     'use strict';
 
-    function forceEverythingToLive() {
-        // 1. Balance ke target koro (eta pawa geche)
+    const liveGreen = '#26a69a'; // Asol Live Green
+
+    function forceVisuals() {
+        // 1. Balance Target
         const balance = document.querySelector('.pVBHU');
         
         if (balance) {
-            // Balance-er rongo shada koro
-            balance.setAttribute('style', 'color: #ffffff !important; font-weight: 700 !important;');
+            // Balance color white kora
+            balance.style.setProperty('color', '#ffffff', 'important');
+            balance.style.setProperty('font-weight', '700', 'important');
 
-            // 2. Balance-er parent ba baper element-er bhetore khujo
-            // Sadharonoto account status balance-er khub kachei thake
-            const headerSection = balance.closest('div').parentElement;
-            
-            if (headerSection) {
-                // Header-er bhetore joto 'div' ba 'span' ache segulo check koro
-                const allElements = headerSection.querySelectorAll('div, span, p');
+            // 2. Status Target (Balance-er parent element-er bhetore khujchi)
+            const wrapper = balance.closest('.VQ9Ug'); 
+            if (wrapper) {
+                // Wrapper-er bhetore thaka prothom div-tii holo status (Demo/Live)
+                const statusDiv = wrapper.querySelector('div:first-child');
                 
-                allElements.forEach(el => {
-                    // Jodi kono element-er bhetore 'Demo' ba 'Practice' thake
-                    if (el.innerText.toLowerCase().includes('demo') || el.innerText.toLowerCase().includes('practice')) {
-                        
-                        // Setake "LIVE ACCOUNT" baniye dao
-                        el.innerHTML = `
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:5px; vertical-align:middle;">
-                                <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="#26a69a"/>
-                            </svg>
-                            <span style="color:#26a69a !important; font-weight:900 !important; font-size:11px !important;">LIVE ACCOUNT</span>
-                        `;
-                        el.setAttribute('style', 'display:flex !important; align-items:center !important; color:#26a69a !important;');
-                    }
-                });
+                if (statusDiv && !statusDiv.innerHTML.includes('LIVE ACCOUNT')) {
+                    // Forcefully Live Account set kora
+                    statusDiv.innerHTML = `
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:5px; vertical-align:middle;">
+                            <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z" fill="${liveGreen}"/>
+                        </svg>
+                        <span style="color:${liveGreen} !important; font-weight:900 !important; font-size:11px !important; vertical-align:middle;">LIVE ACCOUNT</span>
+                    `;
+                    statusDiv.setAttribute('style', `color:${liveGreen} !important; display:flex !important; align-items:center !important;`);
+                }
             }
         }
+
+        // 3. Dropdown arrow (optional fix)
+        const arrow = document.querySelector('.icon-arrow-down');
+        if(arrow) arrow.style.color = '#ffffff';
     }
 
-    // Ekdom fast interval (30ms)
-    setInterval(forceEverythingToLive, 30);
-
-    console.log("Universal Live Override Active.");
+    // Ekdom fast refresh (10ms) - jate asol demo dekhai na jay
+    setInterval(forceVisuals, 10);
 })();
